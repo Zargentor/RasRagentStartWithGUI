@@ -91,6 +91,13 @@ $lblRasSuffix.Location = New-Object System.Drawing.Point(10,160)
 $lblRasSuffix.Size = New-Object System.Drawing.Size(180,22)
 $form.Controls.Add($lblRasSuffix)
 
+# Debug флажок
+$chkDebug = New-Object System.Windows.Forms.CheckBox
+$chkDebug.Text = "Включить debug (-debug)"
+$chkDebug.Location = New-Object System.Drawing.Point(300, 90)
+$chkDebug.AutoSize = $true
+$form.Controls.Add($chkDebug)
+
 $txtRasSuffix = New-Object System.Windows.Forms.TextBox
 $txtRasSuffix.Location = New-Object System.Drawing.Point(195,158)
 $txtRasSuffix.Width = 290
@@ -172,7 +179,11 @@ $btnRun.Add_Click({
         $ServiceDisplayName += " $RagentSuffix"
     }
 
-    $BinaryPath = "$Path -srvc -agent -regport $($StartPort)41 -port $($StartPort)40 -range $($StartPort)60:$($StartPort)91 -d $ServiceInfoQuoted -debug"
+    if ($chkDebug.Checked) {
+        $BinaryPath = "$Path -srvc -agent -regport $($StartPort)41 -port $($StartPort)40 -range $($StartPort)60:$($StartPort)91 -d $ServiceInfoQuoted -debug"
+    } else {
+        $BinaryPath = "$Path -srvc -agent -regport $($StartPort)41 -port $($StartPort)40 -range $($StartPort)60:$($StartPort)91 -d $ServiceInfoQuoted"
+    }
     $CtrlPort = "$($StartPort)40"
     $AgentName = [System.Net.Dns]::GetHostEntry($env:computerName).HostName
     $RASPort = "$($StartPort)45"
