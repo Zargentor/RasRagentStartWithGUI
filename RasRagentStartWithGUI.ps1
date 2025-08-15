@@ -17,11 +17,12 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     exit;
 }
 
-# --- GUI DESIGN ---
+#region [--- GUI DESIGN ---]
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "1C 8.3 Agent/Remote Server Manipulation"
 $form.Size = New-Object System.Drawing.Size(560,540)
 $form.StartPosition = "CenterScreen"
+$form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::Fixed3D
 
 # Platform Path
 $lblPlatform = New-Object System.Windows.Forms.Label
@@ -113,12 +114,15 @@ $form.Controls.Add($btnRun)
 # Logging (readonly) textbox
 $tbLog = New-Object System.Windows.Forms.TextBox
 $tbLog.Location = New-Object System.Drawing.Point(10,240)
-$tbLog.Size = New-Object System.Drawing.Size(515,290)
+$tbLog.Size = New-Object System.Drawing.Size(515,250)
 $tbLog.Multiline = $true
 $tbLog.ReadOnly = $true
 $tbLog.ScrollBars = "Vertical"
 $tbLog.BackColor = [System.Drawing.Color]::White
+$tbLog.Dock = [System.Windows.Forms.DockStyle]::Bottom
 $form.Controls.Add($tbLog)
+
+#endregion
 
 # FolderBrowserDialog handlers
 $browser = New-Object System.Windows.Forms.FolderBrowserDialog
